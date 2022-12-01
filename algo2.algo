@@ -1,0 +1,107 @@
+//PROB1 SOLUTION1//
+
+ALGORITHM sum_dist_num
+VAR
+    set1 , set2 : ARRAY_OF INTEGER [20];
+    i,j :INTEGER;
+    sum : INTEGER := 0
+BEGIN
+    write("enter a values of set 1")
+    read(set1)
+    write("enter a values of set 2")
+    read(set2)
+
+    FOR i FROM 0 TO set1.length-1 STEP step 1  DO
+        FOR j FROM 0 TO set2.length-1 STEP step 1  DO
+            IF (set1[i] <> set2[j]) THEN
+                sum := sum + set1[i]
+            END_IF
+        END_FOR
+    END_FOR
+
+    FOR i FROM 0 TO set2.length-1 STEP step 1  DO
+        FOR j FROM 0 TO set1.length-1 STEP step 1  DO
+            IF (set2[i] <> set1[j]) THEN
+                sum := sum + set2[i]
+            END_IF
+        END_FOR
+    END_FOR
+
+    write(sum)    
+
+END
+
+
+//PROB1 SOLUTION 2//
+
+ALGORITHM dist_num-HT
+VAR
+    set1 , set2 : ARRAY_OF INTEGER[20];
+    i : INTEGER
+    sum : INTEGER := 0
+    ht := HASH_TABLE<INTEGER,INTEGER>
+    count : INTEGER
+    set_Keys : ARRAY_OF INTEGER[40]
+BEGIN
+    //replisage HT
+    FOR i FROM 0 TO set1.length-1 STEP step 1  DO     
+        IF (ht.lookup(set1[i] = false)) THEN
+            ht.insert(set1[i] , 1)
+        ELSE
+            count := ht.get(set1[i])
+            ht.insert(set1[i] , count+1)
+        END_IF
+        
+        IF (ht.lookup(set2[i] = false)) THEN
+            ht.insert(set2[i] , 1)
+        ELSE
+            count := ht.get(set2[i])
+            ht.insert(set2[i] , count+1)
+        END_IF
+    END_FOR
+
+    
+    set_Keys:= ht.getkeys()
+
+    FOR i FROM 0 TO set_Keys.length-1 STEP step 1 DO
+        IF (ht.get(set_Keys[i]) = 1) THEN
+            sum : sum + set_Keys[i]
+        END_IF
+    END_FOR
+
+
+    write(sum)
+
+END
+
+//PROB2 //
+ALGORITHM sum_overlap_num
+VAR
+    set1 , set2 : ARRAY_OF INTEGER [20];
+    i,j :INTEGER;
+    sum : INTEGER := 0
+BEGIN
+    write("enter a values of set 1")
+    read(set1)
+    write("enter a values of set 2")
+    read(set2)
+
+    FOR i FROM 0 TO set1.length-1 STEP step 1  DO
+        FOR j FROM 0 TO set2.length-1 STEP step 1  DO
+            IF (set1[i] = set2[j]) THEN
+                sum := sum + set1[i]
+            END_IF
+        END_FOR
+    END_FOR
+
+    FOR i FROM 0 TO set2.length-1 STEP step 1  DO
+        FOR j FROM 0 TO set1.length-1 STEP step 1  DO
+            IF (set2[i] = set1[j]) THEN
+                sum := sum + set2[i]
+            END_IF
+        END_FOR
+    END_FOR
+
+    write(sum)    
+
+END
